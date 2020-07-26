@@ -2,8 +2,6 @@ package api
 
 import (
   "net/http"
-
-  "github.com/sirupsen/logrus"
 )
 
 const AccessTokenHeader = "X-Access-Token"
