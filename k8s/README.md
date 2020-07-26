@@ -1,6 +1,16 @@
 # K8s files
 
-Deploy
+
+### Secrets
+
+The service requires that an access token be configured.
+
+```
+export ACCESS_TOKEN=$(echo -n <token> | base64 -w 0)
+envsubst < k8s/secrets.yaml | kubectl apply -f -
+```
+
+### Deploy
 
 ```
 docker build .
@@ -10,16 +20,9 @@ docker push docker.pedanticorderliness.com/gh-action-listener:$TAG_NAME
 envsubst < k8s/deployment.yaml | kubectl apply -f -
 ```
 
-Setup service and ingress
+### Setup service and ingress
 
 ```
 envsubst < k8s/service.yaml | kubectl apply -f -
 kubectl apply -f ingress.yaml
-```
-
-Secrets
-
-```
-export ACCESS_TOKEN=$(echo -n <token> | base64 -w 0)
-envsubst < k8s/secrets.yaml | kubectl apply -f -
 ```
