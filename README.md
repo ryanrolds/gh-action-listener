@@ -1,6 +1,6 @@
-# gh_action_listener
+# GitHub Action Listener for K8s
 
-A K8s in-cluster service listens for deploy envents over HTTP for a pre-configured list repo-deployemnt pairs. Intended to be used with Git Hub Action, but is not specifically designed for that.
+A K8s in-cluster service that listens for events over HTTP for a pre-configured list repo-deployemnt pairs. Intended to be used with Git Hub Action, but is not specifically designed for that.
 
 ## Running
 
