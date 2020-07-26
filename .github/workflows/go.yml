@@ -28,6 +28,6 @@ jobs:
         tags: latest
     - name: Deploy
       run: |
-        curl -X PUT -H "X-Access-Token: ${{ secrests.ACTIONS_ACCESS_TOKEN }}" \
+        curl -X PUT -H "X-Access-Token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}" \
         https://actions.pedanticorderliness.com/deploy?repo=$GITHUB_REPOSITORY&tag=$GITHUB_SHA
  
