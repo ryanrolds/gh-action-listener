@@ -26,4 +26,8 @@ jobs:
         password: ${{ secrets.DOCKER_REG_PASS }}
         repository: gh-action-listener
         tags: latest
+    - name: Deploy
+      run: |
+        curl -X PUT -H "X-Access-Token: ${{ secrests.ACTIONS_ACCESS_TOKEN }}" \
+        https://actions.pedanticorderliness.com/deploy?repo=$GITHUB_REPOSITORY&tag=$GITHUB_SHA
  
