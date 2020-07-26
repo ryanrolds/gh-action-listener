@@ -1,0 +1,3 @@
+listener-settings:
+  repos:
+    ryanrolds/gh_action_listener: gh-action-listener
