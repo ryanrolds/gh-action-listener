@@ -21,8 +21,9 @@ jobs:
     - name: Build and push Docker images
       uses: docker/build-push-action@v1.1.0
       with:
+        registry: docker.pedanticorderliness.com
         username: ${{ secrets.DOCKER_REG_USER }}
         password: ${{ secrets.DOCKER_REG_PASS }}
-        repository: docker.pedanticorderliness.com/gh-action-listener
+        repository: gh-action-listener
         tags: latest
  
