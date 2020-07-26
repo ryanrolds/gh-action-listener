@@ -1,20 +1,25 @@
 # K8s files
 
-Docker Build
+Deploy
 
 ```
 docker build .
-<get final tag (4ea6105f31a3) from output >
-docker tag 4ea6105f31a3 docker.pedanticorderliness.com/gh_action_listener:4ea6105f31a3
-docker push docker.pedanticorderliness.com/gh_action_listener:4ea6105f31a3
+export TAG_NAME=$(docker images --format='{{.ID}}' | head -1)
+docker tag $TAG_NAME docker.pedanticorderliness.com/gh-action-listener:$TAG_NAME
+docker push docker.pedanticorderliness.com/gh-action-listener:$TAG_NAME
+envsubst < k8s/deployment.yaml | kubectl apply -f -
 ```
 
-K8s
+Setup service and ingress
 
 ```
-export ENV=prod
-export TAG_NAME=4ea6105f31a3
-envsubst < deployment.yaml | kubectl apply -f -
-envsubst < service.yaml | kubectl apply -f -
-kubectl apply -f ingress-prod.yaml
+envsubst < k8s/service.yaml | kubectl apply -f -
+kubectl apply -f ingress.yaml
+```
+
+Secrets
+
+```
+export ACCESS_TOKEN=$(echo -n <token> | base64 -w 0)
+envsubst < k8s/secrets.yaml | kubectl apply -f -
 ```

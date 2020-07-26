@@ -1,3 +1,3 @@
-listener-settings:
-  repos:
-    ryanrolds/gh_action_listener: gh-action-listener
+repos:
+  - repo: ryanrolds/gh_action_listener
+    deployment: gh-action-listener

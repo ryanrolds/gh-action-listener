@@ -17,6 +17,9 @@ github.com/google/gofuzz
 github.com/googleapis/gnostic/OpenAPIv2
 github.com/googleapis/gnostic/compiler
 github.com/googleapis/gnostic/extensions
+# github.com/gorilla/mux v1.7.4
+## explicit
+github.com/gorilla/mux
 # github.com/ilyakaznacheev/cleanenv v1.2.4
 ## explicit
 github.com/ilyakaznacheev/cleanenv
