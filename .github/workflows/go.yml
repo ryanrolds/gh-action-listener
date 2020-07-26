@@ -25,7 +25,7 @@ jobs:
         username: ${{ secrets.DOCKER_REG_USER }}
         password: ${{ secrets.DOCKER_REG_PASS }}
         repository: gh-action-listener
-        tags: ${{ env.GITHUB_SHA }},latest
+        tags: ${{ github.sha }},latest
     - name: Deploy
       run: |
         curl --fail -X PUT -H "X-Access-Token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}" "https://actions.pedanticorderliness.com/deploy?repo=$GITHUB_REPOSITORY&tag=$GITHUB_SHA"
