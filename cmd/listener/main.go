@@ -43,7 +43,7 @@ func main() {
 	a := api.NewAPI(cfg, clientset)
 	r := mux.NewRouter()
 	r.Use(a.MiddlewareCheckAccess)
-	r.HandleFunc("/deploy", a.DeployHandler).Methods(http.MethodPost)
+	r.HandleFunc("/deploy", a.DeployHandler).Methods(http.MethodPut)
 	http.Handle("/", r)
 
 	srv := &http.Server{
