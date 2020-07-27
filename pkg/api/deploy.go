@@ -62,7 +62,7 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logrus.Info(repo.ID, data)
+	logrus.Info(repo.ID, string(data))
 
 	_, err = deploymentsClient.Update(context.TODO(), deployment, metav1.UpdateOptions{})
 	if err != nil {
