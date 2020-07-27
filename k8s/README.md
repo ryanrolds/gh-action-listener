@@ -30,5 +30,5 @@ kubectl apply -f ingress.yaml
 ### Permission
 
 ```
-kubectl create clusterrolebinding default-patch --clusterrole=patch --serviceaccount=default:default
+kubectl create clusterrolebinding default-edit --clusterrole=edit --serviceaccount=default:default
 ```
