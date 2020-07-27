@@ -5,14 +5,15 @@ import (
 )
 
 type Config struct {
-	AccessToken string `env:"ACCESS_TOKEN,required"`
-	Repos       []Repo `yaml:"repos"`
-	Port        int    `yaml:"port" env:"PORT" env-default:"80"`
+	AccessToken string                `env:"ACCESS_TOKEN,required"`
+	Repos       map[string]Deployment `yaml:"repos"`
+	Port        int                   `yaml:"port" env:"PORT" env-default:"80"`
 }
 
-type Repo struct {
-	Repo       string `yaml:"repo"`
-	Deployment string `yaml:"deployment"`
+type Deployment struct {
+	ID    string `yaml:"deployment"`
+	Name  string `yaml:"name"`
+	Image string `yaml:"iamge"`
 }
 
 func GetConfig(filename string) (*Config, error) {

@@ -1,3 +1,5 @@
 repos:
-  - repo: ryanrolds/gh_action_listener
-    deployment: gh-action-listener
+  ryanrolds/gh_action_listener:
+    id: gh-action-listener
+    name: backend
+    image: docker.pedanticorderliness.com/gh-action-listener
