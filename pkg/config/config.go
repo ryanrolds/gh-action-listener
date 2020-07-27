@@ -11,9 +11,9 @@ type Config struct {
 }
 
 type Deployment struct {
-	ID    string `yaml:"deployment"`
+	ID    string `yaml:"id"`
 	Name  string `yaml:"name"`
-	Image string `yaml:"iamge"`
+	Image string `yaml:"image"`
 }
 
 func GetConfig(filename string) (*Config, error) {

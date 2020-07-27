@@ -26,3 +26,9 @@ envsubst < k8s/deployment.yaml | kubectl apply -f -
 envsubst < k8s/service.yaml | kubectl apply -f -
 kubectl apply -f ingress.yaml
 ```
+
+### Permission
+
+```
+kubectl create clusterrolebinding default-patch --clusterrole=patch --serviceaccount=default:default
+```

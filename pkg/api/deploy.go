@@ -47,13 +47,14 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 	deploymentsClient := a.k8sClient.AppsV1().Deployments(apiv1.NamespaceDefault)
 	patch := fmt.Sprintf(`{"spec":{"template":{"spec":{"containers":[{"name":"%s","image":"%s:%s"}]}}}}`,
 		deployment.Name, deployment.Image, tag)
-	res, err := deploymentsClient.Patch(context.TODO(), deployment.ID, types.MergePatchType, []byte(patch), metav1.PatchOptions{})
+	_, err := deploymentsClient.Patch(context.TODO(), deployment.ID, types.MergePatchType, []byte(patch), metav1.PatchOptions{})
 	if err != nil {
+		logrus.WithError(err).Error("problem patching deployment")
+
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
 		return
 	}
-	fmt.Println(res)
 
 	w.WriteHeader(http.StatusOK)
 }
