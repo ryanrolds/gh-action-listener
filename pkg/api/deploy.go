@@ -49,15 +49,15 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for idx, container := range deployment.Spec.Template.Spec.Containers {
-		if container.Name == repo.Name {
+	for idx := range deployment.Spec.Template.Spec.Containers {
+		if deployment.Spec.Template.Spec.Containers[idx].Name == repo.Name {
 			deployment.Spec.Template.Spec.Containers[idx].Image = fmt.Sprintf("%s:%s", repo.Image, tag)
 		}
 	}
 
 	data, err := deployment.Marshal()
 	if err != nil {
-		logrus.WithError(err).Error("problem marshalling deployment")
+		logrus.WithError(err).Error("problem marshaling deployment")
 		writeResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
