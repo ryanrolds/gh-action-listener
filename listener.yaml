@@ -1,5 +1,13 @@
 repos:
   ryanrolds/gh_action_listener:
     id: gh-action-listener
-    name: backend
+    name: listener
     image: docker.pedanticorderliness.com/gh-action-listener
+  ryanrolds/club/frontend:
+    id: club-frontend-prod
+    name: frontend
+    image: docker.pedanticorderliness.com/club-frontend
+  ryanrolds/club/backend:
+    id: club-backend-prod
+    name: backend
+    image: docker.pedanticorderliness.com/club-backend

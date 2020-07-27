@@ -15,7 +15,7 @@ spec:
         app: gh-action-listener
     spec:
       containers:
-      - name: backend
+      - name: listener
         image: docker.pedanticorderliness.com/gh-action-listener:${TAG_NAME}
         ports:
         - containerPort: 80
