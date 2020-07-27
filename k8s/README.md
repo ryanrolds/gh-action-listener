@@ -1,6 +1,5 @@
 # K8s files
 
-
 ### Secrets
 
 The service requires that an access token be configured.
