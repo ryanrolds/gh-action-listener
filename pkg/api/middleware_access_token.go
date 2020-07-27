@@ -1,14 +1,14 @@
 package api
 
 import (
-  "net/http"
+	"net/http"
 )
 
 const AccessTokenHeader = "X-Access-Token"
 
 func (a *API) MiddlewareCheckAccess(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-    token := r.Header.Get(AccessTokenHeader)
+		token := r.Header.Get(AccessTokenHeader)
 
 		if token != "" && token == a.config.AccessToken {
 			next.ServeHTTP(w, r)

@@ -20,7 +20,11 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 	repoValues, ok := r.URL.Query()[ParamRepo]
 	if !ok {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("missing repo query param"))
+		_, err := w.Write([]byte("missing repo query param"))
+		if err != nil {
+			logrus.WithError(err).Warn("problem writing response")
+		}
+
 		return
 	}
 
@@ -29,7 +33,11 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 	tagValues, ok := r.URL.Query()[ParamTag]
 	if !ok {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("missing tag query param"))
+		_, err := w.Write([]byte("missing tag query param"))
+		if err != nil {
+			logrus.WithError(err).Warn("problem writing response")
+		}
+
 		return
 	}
 
@@ -40,7 +48,11 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 	deployment, ok := a.config.Repos[repo]
 	if !ok {
 		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte("unkonwn repo"))
+		_, err := w.Write([]byte("unknown repo"))
+		if err != nil {
+			logrus.WithError(err).Warn("problem writing response")
+		}
+
 		return
 	}
 
@@ -52,7 +64,11 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 		logrus.WithError(err).Error("problem patching deployment")
 
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(err.Error()))
+		_, writeErr := w.Write([]byte(err.Error()))
+		if err != nil {
+			logrus.WithError(writeErr).Warn("problem writing response")
+		}
+
 		return
 	}
 
