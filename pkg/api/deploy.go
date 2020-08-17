@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/sirupsen/logrus"
-	apiv1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -40,7 +39,7 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	deploymentsClient := a.k8sClient.AppsV1().Deployments(apiv1.NamespaceDefault)
+	deploymentsClient := a.k8sClient.AppsV1().Deployments(repo.Namespace)
 
 	deployment, err := deploymentsClient.Get(context.TODO(), repo.ID, metav1.GetOptions{})
 	if err != nil {
