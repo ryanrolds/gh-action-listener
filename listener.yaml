@@ -15,7 +15,7 @@ repos:
     namespace: default
     image: docker.pedanticorderliness.com/club-backend
   ryanrolds/plant-metrics/collector:
-    id: plant-metrics-collector
+    id: plant-metrics-collector-prod
     name: collector
     namespace: plant-metrics
     image: docker.pedanticorderliness.com/plant-metrics-collector
