@@ -11,3 +11,7 @@ repos:
     id: club-backend-prod
     name: backend
     image: docker.pedanticorderliness.com/club-backend
+  ryanrolds/plant-metrics/collector:
+    id: plant-metrics-collector
+    name: collector
+    image: docker.pedanticorderliness.com/plant-metrics-collector
