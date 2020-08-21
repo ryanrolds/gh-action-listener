@@ -19,3 +19,8 @@ repos:
     name: collector
     namespace: plant-metrics
     image: docker.pedanticorderliness.com/plant-metrics-collector
+    ryanrolds/plant-metrics/frontend:
+      id: frontend-prod
+      name: frontend
+      namespace: plant-metrics
+      image: docker.pedanticorderliness.com/plant-metrics-frontend
