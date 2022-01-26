@@ -24,7 +24,7 @@ repos:
     name: frontend
     namespace: plant-metrics
     image: docker.pedanticorderliness.com/plant-metrics-frontend
-  ryanrolds/pedantic-orderliness:
+  ryanrolds/pedantic_orderliness:
     id: pedantic-orderliness-test
     name: pedantic-orderliness
     namespace: default
