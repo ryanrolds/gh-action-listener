@@ -21,7 +21,7 @@ coverage-ci:
 	go tool cover -func=cover.out
 
 lint:
-	./bin/golangci-lint run
+	./bin/golangci-lint run --timeout 5m
 
 ci: install lint build test coverage-ci
 
