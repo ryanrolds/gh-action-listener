@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"path"
 	"runtime"
 	"strings"
@@ -19,6 +20,7 @@ func initLogging() {
 			return funcName, fmt.Sprintf("%s:%d", path.Base(f.File), f.Line)
 		},
 	})
+	logrus.SetOutput(os.Stdout)
 
 	logrus.Infof("Log level: %s", logrus.GetLevel())
 }

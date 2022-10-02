@@ -38,7 +38,10 @@ func main() {
 
 	a := api.NewAPI(cfg, clientset)
 	r := mux.NewRouter()
+
+	// TODO add request logging middleware
 	r.Use(a.MiddlewareCheckAccess)
+
 	r.HandleFunc("/deploy", a.DeployHandler).Methods(http.MethodPut)
 	r.HandleFunc("/resource/screeps/server", a.ScreepsServerResourceHandler).Methods(http.MethodPost, http.MethodDelete)
 

@@ -70,5 +70,7 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	logrus.Infof("deployment updated: %v", deployment)
+
 	w.WriteHeader(http.StatusOK)
 }

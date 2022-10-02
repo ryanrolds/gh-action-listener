@@ -19,6 +19,7 @@ const (
 func (a *API) ScreepsServerResourceHandler(w http.ResponseWriter, r *http.Request) {
 	branchValues, ok := r.URL.Query()[ParamBranch]
 	if !ok {
+		logrus.Error("missing branch query param")
 		writeResponse(w, http.StatusBadRequest, "missing branch query param")
 		return
 	}
@@ -27,6 +28,7 @@ func (a *API) ScreepsServerResourceHandler(w http.ResponseWriter, r *http.Reques
 
 	tagValues, ok := r.URL.Query()[ParamTag]
 	if !ok {
+		logrus.Error("missing tag query param")
 		writeResponse(w, http.StatusBadRequest, "missing tag query param")
 		return
 	}
@@ -37,6 +39,7 @@ func (a *API) ScreepsServerResourceHandler(w http.ResponseWriter, r *http.Reques
 
 	resource, ok := a.config.Resources[ResourceScreepsServer]
 	if !ok {
+		logrus.Errorf("unknown resource: %s", ResourceScreepsServer)
 		writeResponse(w, http.StatusNotFound, "unknown resource")
 		return
 	}
