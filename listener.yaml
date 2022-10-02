@@ -29,3 +29,8 @@ repos:
     name: pedantic-orderliness
     namespace: default
     image: docker.pedanticorderliness.com/pedantic
+resources:
+  screeps-server:
+    id: bot-prs
+    name: Bot Pull Requests
+    namespace: screeps
