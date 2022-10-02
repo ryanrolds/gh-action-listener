@@ -43,7 +43,8 @@ func main() {
 	r.Use(a.MiddlewareCheckAccess)
 
 	r.HandleFunc("/deploy", a.DeployHandler).Methods(http.MethodPut)
-	r.HandleFunc("/resource/screeps/server", a.ScreepsServerResourceHandler).Methods(http.MethodPost, http.MethodDelete)
+	r.HandleFunc("/resource/screeps/server", a.CreateUpdateScreepsServerResourceHandler).Methods(http.MethodPost)
+	r.HandleFunc("/resource/screeps/server", a.DeleteScreepsServerResourceHandler).Methods(http.MethodDelete)
 
 	srv := &http.Server{
 		Handler:      r,
