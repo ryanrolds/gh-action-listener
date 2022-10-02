@@ -40,7 +40,7 @@ func main() {
 	r := mux.NewRouter()
 	r.Use(a.MiddlewareCheckAccess)
 	r.HandleFunc("/deploy", a.DeployHandler).Methods(http.MethodPut)
-	http.Handle("/", r)
+	r.HandleFunc("/resource/screeps/server", a.ScreepsServerResourceHandler).Methods(http.MethodPost, http.MethodDelete)
 
 	srv := &http.Server{
 		Handler:      r,

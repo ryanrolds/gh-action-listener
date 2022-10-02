@@ -3,7 +3,7 @@
 all: build coverage
 
 install:
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.29.0
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.49.0
 
 build:
 	go build ./cmd/listener

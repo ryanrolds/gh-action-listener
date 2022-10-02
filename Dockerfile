@@ -1,4 +1,4 @@
-FROM golang:1.17-alpine as build
+FROM golang:1.19-alpine as build
 
 RUN apk add --update make git build-base
 RUN apk --no-cache add ca-certificates

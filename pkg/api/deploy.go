@@ -72,11 +72,3 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 }
-
-func writeResponse(w http.ResponseWriter, status int, reason string) {
-	w.WriteHeader(status)
-	_, err := w.Write([]byte(reason))
-	if err != nil {
-		logrus.WithError(err).Warn("problem writing response")
-	}
-}
