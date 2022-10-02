@@ -9,6 +9,15 @@ export ACCESS_TOKEN=$(echo -n <token> | base64 -w 0)
 envsubst < k8s/secrets.yaml | kubectl apply -f -
 ```
 
+### Accounts, Roles, and Bindings
+
+It's expected that the Screeps Server controller is installed and the role have been applied.
+
+```
+kubectl apply -f service_account.yaml
+kubectl apply -f role_binding.yaml
+```
+
 ### Deploy
 
 ```
@@ -24,10 +33,4 @@ envsubst < k8s/deployment.yaml | kubectl apply -f -
 ```
 envsubst < k8s/service.yaml | kubectl apply -f -
 kubectl apply -f ingress.yaml
-```
-
-### Permission
-
-```
-kubectl create clusterrolebinding default-edit --clusterrole=edit --serviceaccount=default:default
 ```

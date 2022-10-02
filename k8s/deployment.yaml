@@ -27,3 +27,5 @@ spec:
                 key: accessToken
       imagePullSecrets:
         - name: regcred
+      serviceAccountName: gh-action-listener
+
