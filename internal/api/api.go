@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"github.com/ryanrolds/gh_action_listener/pkg/config"
+	"github.com/ryanrolds/gh_action_listener/internal/config"
 	"github.com/sirupsen/logrus"
 	"k8s.io/client-go/kubernetes"
 )

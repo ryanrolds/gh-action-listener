@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/ryanrolds/gh_action_listener/pkg/api"
-	"github.com/ryanrolds/gh_action_listener/pkg/config"
+	"github.com/ryanrolds/gh_action_listener/internal/api"
+	"github.com/ryanrolds/gh_action_listener/internal/config"
 	"github.com/sirupsen/logrus"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
