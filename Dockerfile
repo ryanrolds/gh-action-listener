@@ -10,7 +10,7 @@ RUN make build
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
-WORKDIR /club/
+WORKDIR /listener/
 COPY --from=build /gh_action_listener/listener .
 COPY --from=build /gh_action_listener/listener.yaml .
 
