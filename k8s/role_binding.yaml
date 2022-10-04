@@ -5,7 +5,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: manager-role
+  name: screepsserver-editor-role
 subjects:
 - kind: ServiceAccount
   name: gh-action-listener
