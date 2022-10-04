@@ -165,5 +165,6 @@ func (a *API) DeleteScreepsServerResourceHandler(w http.ResponseWriter, r *http.
 		return
 	}
 
-	writeResponse(w, http.StatusOK, "not implemented")
+	logrus.Infof("deleted screeps server: %v", branchName)
+	w.WriteHeader(http.StatusOK)
 }
