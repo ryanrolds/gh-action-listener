@@ -27,15 +27,22 @@ import (
 type ScreepsServerSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of ScreepsServer. Edit screepsserver_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Branch string `json:"branch,omitempty"`
+	Tag    string `json:"tag,omitempty"`
 }
+
+type Status string
+
+const (
+	RedisStatusCreated Status = "Created"
+	RedisStatusRunning Status = "Running"
+)
 
 // ScreepsServerStatus defines the observed state of ScreepsServer
 type ScreepsServerStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	PrivateServerStatus Status `json:"privateServerStatus,omitempty"`
 }
 
 //+kubebuilder:object:root=true

@@ -93,7 +93,10 @@ func (a *API) CreateUpdateScreepsServerResourceHandler(w http.ResponseWriter, r 
 				Name:      branchName,
 				Namespace: resource.Namespace,
 			},
-			Spec: screepsv1.ScreepsServerSpec{},
+			Spec: screepsv1.ScreepsServerSpec{
+				Branch: branchName,
+				Tag:    tag,
+			},
 		}
 
 		err = controllerClient.Create(context.TODO(), server)
@@ -110,7 +113,7 @@ func (a *API) CreateUpdateScreepsServerResourceHandler(w http.ResponseWriter, r 
 
 	// If exists, update
 	// TODO tag update
-	// server.Spec.Tag = tag
+	server.Spec.Tag = tag
 	err = controllerClient.Update(context.TODO(), server)
 	if err != nil {
 		logrus.WithError(err).Error("problem updating screeps server")
