@@ -151,6 +151,14 @@ func (a *API) DeleteScreepsServerResourceHandler(w http.ResponseWriter, r *http.
 
 	branchName := branchValues[0]
 
+	// munge branch name to be a valid k8s resource name
+	branchName, err := mungeBranchName(branchName)
+	if err != nil {
+		logrus.Error(err)
+		writeResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
 	logrus.Infof("delete screeps resource handler called %s", branchName)
 
 	resource, ok := a.config.Resources[ResourceScreepsServer]
