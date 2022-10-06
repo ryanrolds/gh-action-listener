@@ -2,7 +2,10 @@ package api
 
 import (
 	"context"
+	"errors"
 	"net/http"
+	"regexp"
+	"strings"
 
 	screepsv1 "github.com/ryanrolds/screeps-server-controller/api/v1"
 	"github.com/sirupsen/logrus"
@@ -43,6 +46,14 @@ func (a *API) CreateUpdateScreepsServerResourceHandler(w http.ResponseWriter, r 
 	}
 
 	branchName := branchValues[0]
+
+	// munge branch name to be a valid k8s resource name
+	branchName, err := mungeBranchName(branchName)
+	if err != nil {
+		logrus.Error(err)
+		writeResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
 
 	tagValues, ok := r.URL.Query()[ParamTag]
 	if !ok {
@@ -111,17 +122,22 @@ func (a *API) CreateUpdateScreepsServerResourceHandler(w http.ResponseWriter, r 
 		return
 	}
 
-	// If exists, update
-	// TODO tag update
-	server.Spec.Tag = tag
-	err = controllerClient.Update(context.TODO(), server)
-	if err != nil {
-		logrus.WithError(err).Error("problem updating screeps server")
-		writeResponse(w, http.StatusInternalServerError, err.Error())
-		return
+	// If tag is different than spec, update
+	if server.Spec.Tag != tag {
+		// If exists, update
+		server.Spec.Tag = tag
+		err = controllerClient.Update(context.TODO(), server)
+		if err != nil {
+			logrus.WithError(err).Error("problem updating screeps server")
+			writeResponse(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		logrus.Infof("updated screeps server: %v", server)
+		w.WriteHeader(http.StatusOK)
 	}
 
-	logrus.Infof("updated screeps server: %v", server)
+	logrus.Info("screeps server already up to date")
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -167,4 +183,20 @@ func (a *API) DeleteScreepsServerResourceHandler(w http.ResponseWriter, r *http.
 
 	logrus.Infof("deleted screeps server: %v", branchName)
 	w.WriteHeader(http.StatusOK)
+}
+
+func mungeBranchName(branchName string) (string, error) {
+	branchName = strings.ReplaceAll(branchName, "/", "-")
+	branchName = strings.ReplaceAll(branchName, "_", "-")
+	branchName = strings.ReplaceAll(branchName, ".", "-")
+	branchName = strings.ReplaceAll(branchName, " ", "")
+	branchName = strings.ReplaceAll(branchName, ":", "")
+	branchName = strings.ReplaceAll(branchName, "@", "")
+	branchName = strings.ReplaceAll(branchName, "#", "")
+
+	if regexp.MustCompile("[^a-zA-Z0-9-]+").MatchString(branchName) {
+		return "", errors.New("invalid branch name: " + branchName)
+	}
+
+	return branchName, nil
 }
