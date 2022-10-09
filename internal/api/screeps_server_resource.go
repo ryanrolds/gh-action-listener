@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 
 	screepsv1 "github.com/ryanrolds/screeps-server-controller/api/v1"
@@ -18,6 +19,8 @@ import (
 const (
 	ResourceScreepsServer = "screeps-server"
 	ParamBranch           = "branch"
+	ParamOwner            = "owner"
+	ParamIssue            = "issue"
 )
 
 func getClient() (client.Client, error) {
@@ -64,6 +67,39 @@ func (a *API) CreateUpdateScreepsServerResourceHandler(w http.ResponseWriter, r 
 
 	tag := tagValues[0]
 
+	// Get owner
+	ownerValues, ok := r.URL.Query()[ParamOwner]
+	if !ok {
+		logrus.Error("missing owner query param")
+		writeResponse(w, http.StatusBadRequest, "missing owner query param")
+		return
+	}
+	owner := ownerValues[0]
+
+	// Get repo
+	repoValues, ok := r.URL.Query()[ParamRepo]
+	if !ok {
+		logrus.Error("missing repo query param")
+		writeResponse(w, http.StatusBadRequest, "missing repo query param")
+		return
+	}
+	repo := repoValues[0]
+
+	// Get issue
+	issueValues, ok := r.URL.Query()[ParamIssue]
+	if !ok {
+		logrus.Error("missing issue query param")
+		writeResponse(w, http.StatusBadRequest, "missing issue query param")
+		return
+	}
+	issueRaw := issueValues[0]
+	issue, err := strconv.Atoi(issueRaw)
+	if err != nil {
+		logrus.Error(err)
+		writeResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
 	logrus.Infof("create/update screeps resource handler called %s %s", branchName, tag)
 
 	resource, ok := a.config.Resources[ResourceScreepsServer]
@@ -107,6 +143,11 @@ func (a *API) CreateUpdateScreepsServerResourceHandler(w http.ResponseWriter, r 
 			Spec: screepsv1.ScreepsServerSpec{
 				Branch: branchName,
 				Tag:    tag,
+				PullRequest: screepsv1.PullRequest{
+					Owner: owner,
+					Repo:  repo,
+					Issue: issue,
+				},
 			},
 		}
 

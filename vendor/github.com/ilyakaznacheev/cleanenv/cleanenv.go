@@ -1,17 +1,3 @@
-/*
-Package cleanenv gives you a single tool to read application configuration from several sources.
-
-You can just prepare config structure and fill it from the config file and environment variables.
-
-	type Config struct {
-		Port string `yaml:"port" env:"PORT" env-default:"8080"`
-		Host string `yaml:"host" env:"HOST" env-default:"localhost"`
-	}
-
-	var cfg Config
-
-	ReadConfig("config.yml", &cfg)
-*/
 package cleanenv
 
 import (
@@ -20,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"math"
+	"net/url"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -29,7 +16,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/joho/godotenv"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 	"olympos.io/encoding/edn"
 )
 
@@ -54,6 +41,8 @@ const (
 	TagEnvUpd = "env-upd"
 	// Flag to mark a field as required
 	TagEnvRequired = "env-required"
+	// Flag to specify prefix for structure fields
+	TagEnvPrefix = "env-prefix"
 )
 
 // Setter is an interface for a custom value setter.
@@ -212,14 +201,49 @@ func (sm *structMeta) isFieldValueZero() bool {
 	return isZero(sm.fieldValue)
 }
 
+// parseFunc custom value parser function
+type parseFunc func(*reflect.Value, string, *string) error
+
+// Any specific supported struct can be added here
+var validStructs = map[reflect.Type]parseFunc{
+	reflect.TypeOf(time.Time{}): func(field *reflect.Value, value string, layout *string) error {
+		var l string
+		if layout != nil {
+			l = *layout
+		} else {
+			l = time.RFC3339
+		}
+		val, err := time.Parse(l, value)
+		if err != nil {
+			return err
+		}
+		field.Set(reflect.ValueOf(val))
+		return nil
+	},
+	reflect.TypeOf(url.URL{}): func(field *reflect.Value, value string, _ *string) error {
+		val, err := url.Parse(value)
+		if err != nil {
+			return err
+		}
+		field.Set(reflect.ValueOf(*val))
+		return nil
+	},
+}
+
 // readStructMetadata reads structure metadata (types, tags, etc.)
 func readStructMetadata(cfgRoot interface{}) ([]structMeta, error) {
-	cfgStack := []interface{}{cfgRoot}
+	type cfgNode struct {
+		Val    interface{}
+		Prefix string
+	}
+
+	cfgStack := []cfgNode{{cfgRoot, ""}}
 	metas := make([]structMeta, 0)
 
 	for i := 0; i < len(cfgStack); i++ {
 
-		s := reflect.ValueOf(cfgStack[i])
+		s := reflect.ValueOf(cfgStack[i].Val)
+		sPrefix := cfgStack[i].Prefix
 
 		// unwrap pointer
 		if s.Kind() == reflect.Ptr {
@@ -242,11 +266,12 @@ func readStructMetadata(cfgRoot interface{}) ([]structMeta, error) {
 				separator string
 			)
 
-			// process nested structure (except of time.Time)
+			// process nested structure (except of supported ones)
 			if fld := s.Field(idx); fld.Kind() == reflect.Struct {
 				// add structure to parsing stack
-				if fld.Type() != reflect.TypeOf(time.Time{}) {
-					cfgStack = append(cfgStack, fld.Addr().Interface())
+				if _, found := validStructs[fld.Type()]; !found {
+					prefix, _ := fType.Tag.Lookup(TagEnvPrefix)
+					cfgStack = append(cfgStack, cfgNode{fld.Addr().Interface(), sPrefix + prefix})
 					continue
 				}
 				// process time.Time
@@ -278,6 +303,11 @@ func readStructMetadata(cfgRoot interface{}) ([]structMeta, error) {
 
 			if envs, ok := fType.Tag.Lookup(TagEnv); ok && len(envs) != 0 {
 				envList = strings.Split(envs, DefaultSeparator)
+				if sPrefix != "" {
+					for i := range envList {
+						envList[i] = sPrefix + envList[i]
+					}
+				}
 			}
 
 			metas = append(metas, structMeta{
@@ -430,20 +460,8 @@ func parseValue(field reflect.Value, value, sep string, layout *string) error {
 		field.Set(*mapValue)
 
 	case reflect.Struct:
-		// process time.Time only
-		if valueType.PkgPath() == "time" && valueType.Name() == "Time" {
-
-			var l string
-			if layout != nil {
-				l = *layout
-			} else {
-				l = time.RFC3339
-			}
-			val, err := time.Parse(l, value)
-			if err != nil {
-				return err
-			}
-			field.Set(reflect.ValueOf(val))
+		if structParser, found := validStructs[valueType]; found {
+			return structParser(&field, value, layout)
 		}
 
 	default:

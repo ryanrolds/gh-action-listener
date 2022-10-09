@@ -23,26 +23,36 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
+type PullRequest struct {
+	Owner string `json:"owner,omitempty"`
+	Repo  string `json:"repo,omitempty"`
+	Issue int    `json:"issue,omitempty"`
+}
+
 // ScreepsServerSpec defines the desired state of ScreepsServer
 type ScreepsServerSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Branch string `json:"branch,omitempty"`
-	Tag    string `json:"tag,omitempty"`
+	Name        string      `json:"name,omitempty"`
+	Branch      string      `json:"branch,omitempty"`
+	Tag         string      `json:"tag,omitempty"`
+	PullRequest PullRequest `json:"pullRequest,omitempty"`
 }
 
 type Status string
 
 const (
-	RedisStatusCreated Status = "Created"
-	RedisStatusRunning Status = "Running"
+	StatusCreated Status = "Created"
+	StatusRunning Status = "Running"
 )
 
 // ScreepsServerStatus defines the observed state of ScreepsServer
 type ScreepsServerStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	PrivateServerStatus Status `json:"privateServerStatus,omitempty"`
+	Status      Status `json:"privateServerStatus,omitempty"`
+	ServiceHost string `json:"serviceHost,omitempty"`
+	ServicePort int32  `json:"servicePort,omitempty"`
 }
 
 //+kubebuilder:object:root=true
