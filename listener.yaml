@@ -4,6 +4,11 @@ repos:
     name: listener
     namespace: default
     image: docker.pedanticorderliness.com/gh-action-listener
+  ryanrolds/gh-bot:
+    id: gh-bot
+    name: bot
+    namespace: default
+    image: docker.pedanticorderliness.com/gh-bot
   ryanrolds/club/frontend:
     id: club-frontend-prod
     name: frontend
@@ -14,6 +19,11 @@ repos:
     name: backend
     namespace: default
     image: docker.pedanticorderliness.com/club-backend
+  ryanrolds/pedantic_orderliness:
+    id: pedantic-orderliness-test
+    name: pedantic-orderliness
+    namespace: default
+    image: docker.pedanticorderliness.com/pedantic
   ryanrolds/plant-metrics/collector:
     id: plant-metrics-collector-prod
     name: collector
@@ -24,11 +34,6 @@ repos:
     name: frontend
     namespace: plant-metrics
     image: docker.pedanticorderliness.com/plant-metrics-frontend
-  ryanrolds/pedantic_orderliness:
-    id: pedantic-orderliness-test
-    name: pedantic-orderliness
-    namespace: default
-    image: docker.pedanticorderliness.com/pedantic
 resources:
   screeps-server:
     id: bot-prs
