@@ -1,4 +1,4 @@
-listener
-bin/
+/listener
+/bin
 /cover.html
 /cover.out

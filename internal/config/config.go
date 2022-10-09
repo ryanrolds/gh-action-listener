@@ -5,7 +5,8 @@ import (
 )
 
 type Config struct {
-	AccessToken string                `env:"ACCESS_TOKEN,required"`
+	Schema      string                `yaml:"schema" env-required:"true"`
+	AccessToken string                `env:"ACCESS_TOKEN" env-required:"true"`
 	Repos       map[string]Deployment `yaml:"repos"`
 	Resources   map[string]Resource   `yaml:"resources"`
 	Port        int                   `yaml:"port" env:"PORT" env-default:"80"`

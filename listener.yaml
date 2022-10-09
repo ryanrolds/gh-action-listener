@@ -1,3 +1,4 @@
+schema: v1
 repos:
   ryanrolds/gh_action_listener:
     id: gh-action-listener

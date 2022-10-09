@@ -21,7 +21,7 @@ const (
 func main() {
 	cfg, err := config.GetConfig(configFilename)
 	if err != nil {
-		log.Fatal("problem reading backend.yaml")
+		log.Fatalf("problem reading %s: %s", configFilename, err)
 	}
 
 	initLogging()
@@ -42,7 +42,6 @@ func main() {
 
 	// TODO add request logging middleware
 	r.Use(a.MiddlewareCheckAccess)
-
 	r.HandleFunc("/deploy", a.DeployHandler).Methods(http.MethodPut)
 	r.HandleFunc("/resource/screeps/server", a.CreateUpdateScreepsServerResourceHandler).Methods(http.MethodPost)
 	r.HandleFunc("/resource/screeps/server", a.DeleteScreepsServerResourceHandler).Methods(http.MethodDelete)
@@ -55,5 +54,10 @@ func main() {
 	}
 
 	err = srv.ListenAndServe()
-	logrus.Fatal(err)
+	if err != http.ErrServerClosed {
+		logrus.Fatal(err)
+		return
+	}
+
+	logrus.Info("server gracefully shutdown")
 }
