@@ -41,41 +41,6 @@ func getClient() (client.Client, error) {
 }
 
 func (a *API) CreateUpdateScreepsServerResourceHandler(w http.ResponseWriter, r *http.Request) {
-	branchValues, ok := r.URL.Query()[ParamBranch]
-	if !ok {
-		logrus.Error("missing branch query param")
-		writeResponse(w, http.StatusBadRequest, "missing branch query param")
-		return
-	}
-
-	branchName := branchValues[0]
-
-	// munge branch name to be a valid k8s resource name
-	branchName, err := mungeBranchName(branchName)
-	if err != nil {
-		logrus.Error(err)
-		writeResponse(w, http.StatusBadRequest, err.Error())
-		return
-	}
-
-	tagValues, ok := r.URL.Query()[ParamTag]
-	if !ok {
-		logrus.Error("missing tag query param")
-		writeResponse(w, http.StatusBadRequest, "missing tag query param")
-		return
-	}
-
-	tag := tagValues[0]
-
-	// Get owner
-	ownerValues, ok := r.URL.Query()[ParamOwner]
-	if !ok {
-		logrus.Error("missing owner query param")
-		writeResponse(w, http.StatusBadRequest, "missing owner query param")
-		return
-	}
-	owner := ownerValues[0]
-
 	// Get repo
 	repoValues, ok := r.URL.Query()[ParamRepo]
 	if !ok {
@@ -99,6 +64,33 @@ func (a *API) CreateUpdateScreepsServerResourceHandler(w http.ResponseWriter, r 
 		writeResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
+
+	// Get branch name
+	branchValues, ok := r.URL.Query()[ParamBranch]
+	if !ok {
+		logrus.Error("missing branch query param")
+		writeResponse(w, http.StatusBadRequest, "missing branch query param")
+		return
+	}
+
+	branchName := branchValues[0]
+
+	// munge branch name to be a valid k8s resource name
+	branchName, err = mungeBranchName(branchName)
+	if err != nil {
+		logrus.Error(err)
+		writeResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	tagValues, ok := r.URL.Query()[ParamTag]
+	if !ok {
+		logrus.Error("missing tag query param")
+		writeResponse(w, http.StatusBadRequest, "missing tag query param")
+		return
+	}
+
+	tag := tagValues[0]
 
 	logrus.Infof("create/update screeps resource handler called %s %s", branchName, tag)
 
@@ -144,7 +136,6 @@ func (a *API) CreateUpdateScreepsServerResourceHandler(w http.ResponseWriter, r 
 				Branch: branchName,
 				Tag:    tag,
 				PullRequest: screepsv1.PullRequest{
-					Owner: owner,
 					Repo:  repo,
 					Issue: issue,
 				},
