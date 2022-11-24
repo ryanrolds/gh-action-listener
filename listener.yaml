@@ -5,6 +5,11 @@ repos:
     name: listener
     namespace: default
     image: docker.pedanticorderliness.com/gh-action-listener
+  ryanrolds/gh-action-listener:
+    id: gh-action-listener
+    name: listener
+    namespace: default
+    image: docker.pedanticorderliness.com/gh-action-listener
   ryanrolds/gh-bot:
     id: gh-bot
     name: bot
@@ -21,6 +26,11 @@ repos:
     namespace: default
     image: docker.pedanticorderliness.com/club-backend
   ryanrolds/pedantic_orderliness:
+    id: pedantic-orderliness-test
+    name: pedantic-orderliness
+    namespace: default
+    image: docker.pedanticorderliness.com/pedantic
+  ryanrolds/pedantic-orderliness:
     id: pedantic-orderliness-test
     name: pedantic-orderliness
     namespace: default

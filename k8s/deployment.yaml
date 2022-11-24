@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gh-action-listener
+  namespace: gh-action-listener
   labels:
     app: gh-action-listener
 spec:
@@ -15,17 +16,16 @@ spec:
         app: gh-action-listener
     spec:
       containers:
-      - name: listener
-        image: docker.pedanticorderliness.com/gh-action-listener:${TAG_NAME}
-        ports:
-        - containerPort: 80
-        env:
-          - name: ACCESS_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: gh-action-listener-token
-                key: accessToken
+        - name: listener
+          image: docker.pedanticorderliness.com/gh-action-listener:${TAG_NAME}
+          ports:
+            - containerPort: 80
+          env:
+            - name: ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gh-action-listener-token
+                  key: accessToken
       imagePullSecrets:
         - name: regcred
       serviceAccountName: gh-action-listener
-

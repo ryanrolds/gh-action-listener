@@ -1,5 +1,11 @@
 # K8s files
 
+### Namespace
+
+```
+kubectl apply -f k8s/namespace.yaml
+```
+
 ### Secrets
 
 The service requires that an access token be configured.
@@ -31,6 +37,7 @@ envsubst < k8s/deployment.yaml | kubectl apply -f -
 ### Setup service and ingress
 
 ```
-envsubst < k8s/service.yaml | kubectl apply -f -
+kubectl apply -f k8s/service.yaml
 kubectl apply -f k8s/ingress.yaml
 ```
+

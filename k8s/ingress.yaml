@@ -1,21 +1,24 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: gh-action-listener-ingress
+  namespace: gh-action-listener
   annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-prod-registry
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
-  rules:
-  - host: actions.pedanticorderliness.com
-    http:
-      paths:
-      - backend:
-          serviceName: gh-action-listener-service
-          servicePort: 80
-        path: /
-        pathType: ImplementationSpecific
+  ingressClassName: nginx
   tls:
-  - hosts:
-    - actions.pedanticorderliness.com
-    secretName: gh-action-listener
+    - hosts:
+        - actions.pedanticorderliness.com
+      secretName: gh-action-listener-tls
+  rules:
+    - host: actions.pedanticorderliness.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gh-action-listener-service
+                port:
+                  number: 80

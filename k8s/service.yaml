@@ -2,11 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: gh-action-listener-service
+  namespace: gh-action-listener
 spec:
   selector:
     app: gh-action-listener
   type: ClusterIP
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
+    - protocol: TCP
+      port: 80
+      targetPort: 80
