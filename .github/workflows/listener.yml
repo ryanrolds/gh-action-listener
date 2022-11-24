@@ -32,5 +32,6 @@ jobs:
         tags: ${{ github.sha }},latest
     - name: Deploy
       run: |
-        curl --fail -X PUT -H "X-Access-Token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}" "https://actions.pedanticorderliness.com/deploy?repo=$GITHUB_REPOSITORY&tag=$GITHUB_SHA"
+        curl --fail -X PUT -H "X-Access-Token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}" \
+          "https://actions.pedanticorderliness.com/deploy?repo=$GITHUB_REPOSITORY&tag=$GITHUB_SHA"
 
