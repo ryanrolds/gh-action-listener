@@ -3,37 +3,37 @@ repos:
   ryanrolds/gh_action_listener:
     id: gh-action-listener
     name: listener
-    namespace: default
+    namespace: gh-action-listener
     image: docker.pedanticorderliness.com/gh-action-listener
   ryanrolds/gh-action-listener:
     id: gh-action-listener
     name: listener
-    namespace: default
+    namespace: gh-action-listener
     image: docker.pedanticorderliness.com/gh-action-listener
   ryanrolds/gh-bot:
     id: gh-bot
     name: bot
-    namespace: default
+    namespace: gh-bot
     image: docker.pedanticorderliness.com/gh-bot
   ryanrolds/club/frontend:
     id: club-frontend-prod
     name: frontend
-    namespace: default
+    namespace: club
     image: docker.pedanticorderliness.com/club-frontend
   ryanrolds/club/backend:
     id: club-backend-prod
     name: backend
-    namespace: default
+    namespace: club
     image: docker.pedanticorderliness.com/club-backend
   ryanrolds/pedantic_orderliness:
     id: pedantic-orderliness-test
     name: pedantic-orderliness
-    namespace: default
+    namespace: pedantic-orderliness
     image: docker.pedanticorderliness.com/pedantic
   ryanrolds/pedantic-orderliness:
     id: pedantic-orderliness-test
     name: pedantic-orderliness
-    namespace: default
+    namespace: pedantic-orderliness
     image: docker.pedanticorderliness.com/pedantic
   ryanrolds/plant-metrics/collector:
     id: plant-metrics-collector-prod
