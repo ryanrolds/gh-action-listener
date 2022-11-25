@@ -18,6 +18,7 @@ const (
 func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 	repoValues, ok := r.URL.Query()[ParamRepo]
 	if !ok {
+		logrus.Errorf("missing repo parameter")
 		writeResponse(w, http.StatusBadRequest, "missing repo query param")
 		return
 	}
@@ -27,6 +28,7 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 
 	tagValues, ok := r.URL.Query()[ParamTag]
 	if !ok {
+		logrus.Errorf("missing tag query param")
 		writeResponse(w, http.StatusBadRequest, "missing tag query param")
 		return
 	}
@@ -38,6 +40,7 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 
 	repo, ok := a.config.Repos[repoKey]
 	if !ok {
+		logrus.Errorf("repo %s not found", repoKey)
 		writeResponse(w, http.StatusNotFound, "unknown repo")
 		return
 	}

@@ -36,14 +36,14 @@ repos:
     namespace: club
     image: docker.pedanticorderliness.com/club-backend
   ryanrolds/pedantic_orderliness:
-    id: pedantic-orderliness-test
-    name: pedantic-orderliness
     namespace: pedantic-orderliness-blog-test
+    id: test-blog
+    name: blog
     image: docker.pedanticorderliness.com/blog
   pedanticorderliness/blog:
-    id: pedantic-orderliness-test
-    name: pedantic-orderliness
     namespace: pedantic-orderliness-blog-test
+    id: test-blog
+    name: blog
     image: docker.pedanticorderliness.com/blog
   ryanrolds/plant-metrics/collector:
     id: plant-metrics-collector-prod
