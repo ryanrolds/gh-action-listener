@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/sirupsen/logrus"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -21,7 +22,8 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	repoKey := repoValues[0]
+	// get first string and lower case it
+	repoKey := strings.ToLower(repoValues[0])
 
 	tagValues, ok := r.URL.Query()[ParamTag]
 	if !ok {
@@ -29,7 +31,8 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tag := tagValues[0]
+	// get first tag and lower case it
+	tag := strings.ToLower(tagValues[0])
 
 	logrus.Infof("deploy handler called %s %s", repoKey, tag)
 
