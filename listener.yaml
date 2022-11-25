@@ -40,7 +40,7 @@ repos:
     name: pedantic-orderliness
     namespace: pedantic-orderliness-blog-test
     image: docker.pedanticorderliness.com/blog
-  pedanticprderliness/blog:
+  pedanticorderliness/blog:
     id: pedantic-orderliness-test
     name: pedantic-orderliness
     namespace: pedantic-orderliness-blog-test
