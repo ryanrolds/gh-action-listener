@@ -10,7 +10,17 @@ repos:
     name: listener
     namespace: gh-action-listener
     image: docker.pedanticorderliness.com/gh-action-listener
+  PedanticOrderliness/gh-action-listener:
+    id: gh-action-listener
+    name: listener
+    namespace: gh-action-listener
+    image: docker.pedanticorderliness.com/gh-action-listener
   ryanrolds/gh-bot:
+    id: gh-bot
+    name: bot
+    namespace: gh-bot
+    image: docker.pedanticorderliness.com/gh-bot
+  pedanticprderliness/gh-bot:
     id: gh-bot
     name: bot
     namespace: gh-bot
@@ -28,13 +38,13 @@ repos:
   ryanrolds/pedantic_orderliness:
     id: pedantic-orderliness-test
     name: pedantic-orderliness
-    namespace: pedantic-orderliness
-    image: docker.pedanticorderliness.com/pedantic
-  ryanrolds/pedantic-orderliness:
+    namespace: pedantic-orderliness-blog-test
+    image: docker.pedanticorderliness.com/blog
+  pedanticprderliness/blog:
     id: pedantic-orderliness-test
     name: pedantic-orderliness
-    namespace: pedantic-orderliness
-    image: docker.pedanticorderliness.com/pedantic
+    namespace: pedantic-orderliness-blog-test
+    image: docker.pedanticorderliness.com/blog
   ryanrolds/plant-metrics/collector:
     id: plant-metrics-collector-prod
     name: collector
