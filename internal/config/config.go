@@ -7,14 +7,14 @@ import (
 type Config struct {
 	Schema      string                `yaml:"schema" env-required:"true"`
 	AccessToken string                `env:"ACCESS_TOKEN" env-required:"true"`
-	Repos       map[string]Deployment `yaml:"repos"`
+	Deployments map[string]Deployment `yaml:"deployments"`
 	Resources   map[string]Resource   `yaml:"resources"`
 	Port        int                   `yaml:"port" env:"PORT" env-default:"80"`
 }
 
 type Deployment struct {
-	DeploymentName string `yaml:"id"`
-	ContainerName  string `yaml:"name"`
+	DeploymentName string `yaml:"deployment_name"`
+	ContainerName  string `yaml:"container_name"`
 	Namespace      string `yaml:"namespace"`
 	Image          string `yaml:"image"`
 }

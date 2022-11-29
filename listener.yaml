@@ -1,5 +1,5 @@
 schema: v1
-repos:
+deployments:
   # GitHub Action Listener
   ryanrolds/gh_action_listener:
     id: gh-action-listener

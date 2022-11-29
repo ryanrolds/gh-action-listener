@@ -38,7 +38,7 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 
 	logrus.Infof("deploy handler called %s %s", repoKey, tag)
 
-	repo, ok := a.config.Repos[repoKey]
+	repo, ok := a.config.Deployments[repoKey]
 	if !ok {
 		logrus.Errorf("repo %s not found", repoKey)
 		writeResponse(w, http.StatusNotFound, "unknown repo")
@@ -60,15 +60,6 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	data, err := deployment.Marshal()
-	if err != nil {
-		logrus.WithError(err).Error("problem marshaling deployment")
-		writeResponse(w, http.StatusInternalServerError, err.Error())
-		return
-	}
-
-	logrus.Info(repo.DeploymentName, string(data))
-
 	_, err = deploymentsClient.Update(context.TODO(), deployment, metav1.UpdateOptions{})
 	if err != nil {
 		logrus.WithError(err).Error("problem updating deployment")
@@ -76,7 +67,7 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logrus.Infof("deployment updated: %v", deployment)
+	logrus.Infof("deployment updated: %s", deployment.ObjectMeta.Name)
 
 	w.WriteHeader(http.StatusOK)
 }
