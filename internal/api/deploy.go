@@ -47,7 +47,7 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 
 	deploymentsClient := a.k8sClient.AppsV1().Deployments(repo.Namespace)
 
-	deployment, err := deploymentsClient.Get(context.TODO(), repo.ID, metav1.GetOptions{})
+	deployment, err := deploymentsClient.Get(context.TODO(), repo.DeploymentName, metav1.GetOptions{})
 	if err != nil {
 		logrus.WithError(err).Error("problem getting deployment")
 		writeResponse(w, http.StatusInternalServerError, err.Error())
@@ -55,7 +55,7 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for idx := range deployment.Spec.Template.Spec.Containers {
-		if deployment.Spec.Template.Spec.Containers[idx].Name == repo.Name {
+		if deployment.Spec.Template.Spec.Containers[idx].Name == repo.ContainerName {
 			deployment.Spec.Template.Spec.Containers[idx].Image = fmt.Sprintf("%s:%s", repo.Image, tag)
 		}
 	}
@@ -67,7 +67,7 @@ func (a *API) DeployHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logrus.Info(repo.ID, string(data))
+	logrus.Info(repo.DeploymentName, string(data))
 
 	_, err = deploymentsClient.Update(context.TODO(), deployment, metav1.UpdateOptions{})
 	if err != nil {

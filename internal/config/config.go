@@ -13,10 +13,10 @@ type Config struct {
 }
 
 type Deployment struct {
-	ID        string `yaml:"id"`
-	Name      string `yaml:"name"`
-	Namespace string `yaml:"namespace"`
-	Image     string `yaml:"image"`
+	DeploymentName string `yaml:"id"`
+	ContainerName  string `yaml:"name"`
+	Namespace      string `yaml:"namespace"`
+	Image          string `yaml:"image"`
 }
 
 type Resource struct {

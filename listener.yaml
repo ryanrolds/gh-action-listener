@@ -2,58 +2,58 @@ schema: v1
 repos:
   ryanrolds/gh_action_listener:
     id: gh-action-listener
-    name: listener
+    container_name: listener
     namespace: gh-action-listener
     image: docker.pedanticorderliness.com/gh-action-listener
   ryanrolds/gh-action-listener:
-    id: gh-action-listener
-    name: listener
+    deployment_name: gh-action-listener
+    container_name: listener
     namespace: gh-action-listener
     image: docker.pedanticorderliness.com/gh-action-listener
   PedanticOrderliness/gh-action-listener:
-    id: gh-action-listener
-    name: listener
+    deployment_name: gh-action-listener
+    container_name: listener
     namespace: gh-action-listener
     image: docker.pedanticorderliness.com/gh-action-listener
   ryanrolds/gh-bot:
-    id: gh-bot
-    name: bot
+    deployment_name: gh-bot
+    container_name: bot
     namespace: gh-bot
     image: docker.pedanticorderliness.com/gh-bot
   pedanticprderliness/gh-bot:
-    id: gh-bot
-    name: bot
+    deployment_name: gh-bot
+    container_name: bot
     namespace: gh-bot
     image: docker.pedanticorderliness.com/gh-bot
   ryanrolds/club/frontend:
-    id: club-frontend-prod
-    name: frontend
+    deployment_name: club-frontend-prod
+    container_name: frontend
     namespace: club
     image: docker.pedanticorderliness.com/club-frontend
   ryanrolds/club/backend:
-    id: club-backend-prod
-    name: backend
+    deployment_name: club-backend-prod
+    container_name: backend
     namespace: club
     image: docker.pedanticorderliness.com/club-backend
   ryanrolds/pedantic_orderliness:
     namespace: pedantic-orderliness-blog-test
-    id: test-blog
-    name: blog
+    deployment_name: test-blog
+    container_name: blog
     image: docker.pedanticorderliness.com/blog
   pedanticorderliness/blog:
     namespace: pedantic-orderliness-blog-test
-    id: test-blog
-    name: blog
+    deployment_name: test-blog
+    container_name: blog
     image: docker.pedanticorderliness.com/blog
   ryanrolds/plant-metrics/collector:
-    id: plant-metrics-collector-prod
-    name: collector
-    namespace: plant-metrics
+    deployment_name: collector
+    container_name: collector
+    namespace: plant-metrics-test
     image: docker.pedanticorderliness.com/plant-metrics-collector
   ryanrolds/plant-metrics/frontend:
-    id: frontend-prod
-    name: frontend
-    namespace: plant-metrics
+    deployment_name: frontend
+    container_name: frontend
+    namespace: plant-metrics-test
     image: docker.pedanticorderliness.com/plant-metrics-frontend
 resources:
   screeps-server:
