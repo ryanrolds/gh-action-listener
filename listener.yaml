@@ -1,5 +1,6 @@
 schema: v1
 repos:
+  # GitHub Action Listener
   ryanrolds/gh_action_listener:
     id: gh-action-listener
     container_name: listener
@@ -10,11 +11,12 @@ repos:
     container_name: listener
     namespace: gh-action-listener
     image: docker.pedanticorderliness.com/gh-action-listener
-  PedanticOrderliness/gh-action-listener:
+  pedanticorderliness/gh-action-listener:
     deployment_name: gh-action-listener
     container_name: listener
     namespace: gh-action-listener
     image: docker.pedanticorderliness.com/gh-action-listener
+  # GitHub Bot
   ryanrolds/gh-bot:
     deployment_name: gh-bot
     container_name: bot
@@ -25,6 +27,7 @@ repos:
     container_name: bot
     namespace: gh-bot
     image: docker.pedanticorderliness.com/gh-bot
+  # Club (deprecated)
   ryanrolds/club/frontend:
     deployment_name: club-frontend-prod
     container_name: frontend
@@ -35,16 +38,13 @@ repos:
     container_name: backend
     namespace: club
     image: docker.pedanticorderliness.com/club-backend
-  ryanrolds/pedantic_orderliness:
-    namespace: pedantic-orderliness-blog-test
-    deployment_name: test-blog
-    container_name: blog
-    image: docker.pedanticorderliness.com/blog
+  # Blog
   pedanticorderliness/blog:
     namespace: pedantic-orderliness-blog-test
     deployment_name: test-blog
     container_name: blog
     image: docker.pedanticorderliness.com/blog
+  # Plant Metrics
   ryanrolds/plant-metrics/collector:
     deployment_name: collector
     container_name: collector
@@ -56,6 +56,7 @@ repos:
     namespace: plant-metrics-test
     image: docker.pedanticorderliness.com/plant-metrics-frontend
 resources:
+  # Screeps
   screeps-server:
     id: bot-prs
     name: Bot Pull Requests
