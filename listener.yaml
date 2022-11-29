@@ -2,7 +2,7 @@ schema: v1
 deployments:
   # GitHub Action Listener
   ryanrolds/gh_action_listener:
-    id: gh-action-listener
+    deployment_name: gh-action-listener
     container_name: listener
     namespace: gh-action-listener
     image: docker.pedanticorderliness.com/gh-action-listener
